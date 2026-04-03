@@ -4,16 +4,18 @@
 # Requirements:
 - Install Vscode
 - Install Docker Desktop on your machine
--Creating a Docker file for a Flask app.
--Building and running the Docker container.
--Best practices for deploying Flask applications using Docker.
+- Creating a Docker file for a Flask app.
+- Building and running the Docker container.
+- Best practices for deploying Flask applications using Docker.
 
-#Intro
+# Intro
 In this exploration of containers, I will be using Docker, the most widely adopted containerisation platform. Before proceeding, it is useful to understand what containers are. According to Docker, “A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application, including the code, runtime, system tools, libraries, and settings.”
 
 Unlike traditional approaches that rely on separate virtual machines for each application, containers allow multiple applications to run on a single operating system. This approach significantly reduces resource usage and improves efficiency, as less processing power is spent maintaining multiple virtual machines and more can be dedicated to running applications.
 
-1. Project structure
+
+
+# Project structure
 flask-app/
 │
 ├──FlaskApplication
@@ -46,3 +48,4 @@ Go to:
 http://localhost:5003
 
 You should see your HTML page.
+
