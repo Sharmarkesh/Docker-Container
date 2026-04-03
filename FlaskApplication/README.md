@@ -33,8 +33,8 @@ flask-app/
 
 
 # Build our Docker image
-From the command line and type the command docker build -t hello-flask-app.
-This command "Docker build "starts the build process. Next, we have "-t hello-flask-app", where the -t option assigns a name to the image. In this instance, we are calling it hello-flask-app. Following this, we use a dot, which signifies the current directory and instructs Docker to search for the Dockerfile there. If we happened to be in another directory, we would replace the . with ./hello-flask, depending on our current location.
+From the command line and type the command <b>docker build -t hello-flask-app. </b>
+This command "<b>Docker build </b> " starts the build process. Next, we have "<b>-t hello-flask-app </b>", where the -t option assigns a name to the image. In this instance, we are calling it <b>hello-flask-app </b>. Following this, we use a dot, which signifies the current directory and instructs Docker to search for the Dockerfile there. If we happened to be in another directory, we would replace the . with ./hello-flask, depending on our current location.
 
 <b> docker build -t Hello-flask-app . </b>
 
