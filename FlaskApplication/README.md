@@ -16,14 +16,18 @@ Unlike traditional approaches that rely on separate virtual machines for each ap
 
 
 # Project structure
+```
 flask-app/
-│
-├──FlaskApplication
-   ├── app.py
-   ├── requirements.txt
-   ├── templates/
-   │   └── index.html
-   └── Dockerfile
+├── FlaskApplication//  # Build artifacts
+│   └── templates/      # HTML templates
+│       └── index.html  # Main page template
+│   ├── app.py          # Flask application
+│   ├── Dockerfile      # Docker build instructions
+│   ├── requirements.txt # Python dependencies
+│   ├── README.md       # Python dependencies
+├── README.md           # Readme file
+   
+```
 
 
 # Build our Docker image
