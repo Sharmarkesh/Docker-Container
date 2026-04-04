@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MySQL Version</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:  #0a1628;
+      --navy2: #112240;
+      --slate: #1e3a5f;
+      --gold:  #c9a84c;
+      --gold2: #e8c97a;
+      --white: #f0f4f8;
+      --muted: #8899aa;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: var(--white);
+      padding: 2rem;
+    }
+    .card {
+      background: var(--navy2);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px;
+      padding: 4rem 3.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.35);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.8rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    h1 span { color: var(--gold2); }
+    p.sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .version-box {
+      background: var(--slate);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .version-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.6rem;
+    }
+    .version-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold2);
+    }
+    .stats-row {
+      display: flex;
+      gap: 10px;
+    }
+    .stat {
+      flex: 1;
+      background: var(--slate);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 10px;
+      padding: 0.9rem;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--white);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="tag">Flask + MySQL</div>
+    <h1>Hello, <span>There!</span></h1>
+    <p class="sub">Connected to MySQL successfully.<br>Here is the database version.</p>
+
+    <div class="version-box">
+      <div class="version-label">MySQL Version</div>
+      <div class="version-value">{{ version }}</div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-label">Host</div>
+        <div class="stat-value">mydb</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Database</div>
+        <div class="stat-value" style="color:var(--gold2);">mysql</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Status</div>
+        <div class="stat-value" style="color:#3fb950;">Connected</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
