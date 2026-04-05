@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #669999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      color: #e6edf3;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #ccffff;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      padding: 3rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      animation: wave 2s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25%       { transform: rotate(15deg); }
+      75%       { transform: rotate(-10deg); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: black;
+    }
+
+    p.sub {
+      color:black;
+      font-size: 13px;
+      margin-bottom: 2rem;
+    }
+
+    .counter-box {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .counter-label {
+      font-size: 15px;
+      color: black;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .counter-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #58a6ff;
+      line-height: 1;
+    }
+
+    .counter-sub {
+      font-size: 12px;
+      color: #8b949e;
+      margin-top: 0.4rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(63,185,80,0.1);
+      border: 1px solid rgba(63,185,80,0.3);
+      color: #3fb950;
+      font-size: 11px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3fb950;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+    
+     /* ── Nav Buttons ── */
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #30363d;
+      transition: all 0.2s;
+    }
+
+    .nav-btn.primary {
+      background: #238636;
+      border-color: #238636;
+      color: #fff;
+    }
+
+    .nav-btn.primary:hover {
+      background: #2ea043;
+      border-color: #2ea043;
+    }
+
+    .nav-btn.secondary {
+      background: transparent;
+      color: #8b949e;
+    }
+
+    .nav-btn.secondary:hover {
+      background: #21262d;
+      border-color: #58a6ff;
+      color: #58a6ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="icon">👋</span>
+    <div class="badge"><div class="dot"></div> Live</div>
+    <h1>Welcome!</h1>
+    <p class="sub">Thanks for stopping by. Welcome to the visit tracker website flow.This page is powered by Flask, Redis &amp; Docker.</p>
+
+  
+     <div class="nav-buttons">
+        <div class="nav-btn primary" onclick="showPage('home')">🏠 <a href="/about" class="btn">About</a></div>
+        <div class="nav-btn secondary" onclick="showPage('visits')">📊<a href="/count" class="btn">View visit count</a></div>
+        
+      </div>
+   
+  </div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flask + Redis Visit Counter — How It Works</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f9fafb;
+      color: #111827;
+      padding: 3rem 1.5rem;
+      line-height: 1.7;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* Header */
+    .header { display: flex; flex-direction: column; gap: 12px; }
+
+    .badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .badge-flask { background: #dbeafe; color: #1e40af; }
+    .badge-redis { background: #fee2e2; color: #991b1b; }
+    .plus        { color: #9ca3af; }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #6b7280;
+    }
+
+    /* Divider */
+    hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* Sections */
+    .section { display: flex; flex-direction: column; gap: 10px; }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .icon-blue  { background: #dbeafe; }
+    .icon-red   { background: #fee2e2; }
+    .icon-green { background: #dcfce7; }
+
+    .section p {
+      font-size: 15px;
+      color: #374151;
+    }
+
+    /* Callout box */
+    .callout {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #166534;
+    }
+
+    /* Code */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      background: #f3f4f6;
+      color: #1e40af;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 1.25rem 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+
+    pre .arrow   { color: #89b4fa; }
+    pre .comment { color: #6c7086; }
+
+    /* Flow */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .flow-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #1e40af;
+      flex-shrink: 0;
+      margin-left: 4px;
+    }
+
+    .flow-text {
+      font-size: 14px;
+      color: #374151;
+      padding: 10px 0;
+    }
+
+    .flow-connector {
+      width: 2px;
+      height: 20px;
+      background: #e5e7eb;
+      margin-left: 8px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    /* Structure */
+    .file-tree {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      padding: 1.25rem 1.5rem;
+      border-radius: 10px;
+      line-height: 2;
+    }
+
+    .file-tree .folder { color: #89b4fa; }
+    .file-tree .file   { color: #a6e3a1; }
+    .file-tree .note   { color: #6c7086; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="badges">
+        <span class="badge badge-flask">Flask</span>
+        <span class="plus">+</span>
+        <span class="badge badge-redis">Redis</span>
+      </div>
+      <h1>HTML Pages for the Visit Counter App</h1>
+      <p class="subtitle">
+        This project uses two HTML templates that work together to create a simple visit tracking app.
+      </p>
+    </div>
+
+    <hr />
+
+    <!-- home.html -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon icon-blue">🏠</div>
+        <code>home.html</code> — the landing page
+      </div>
+      <p>
+        This is the first page the user sees when visiting the app at
+        <code>http://localhost:5001</code>. It has no dynamic content — it is
+        pure static HTML. Its only job is to welcome the user and provide a
+        <strong>"View visit count"</strong> button that links to <code>/count</code>.
+      </p>
+      <p>
+        When the button is clicked, the browser sends a <code>GET</code> request
+        to the <code>/count</code> route in Flask.
+      </p>
+    </div>
+
+    <hr />
+
+    <!-- visits.html -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon icon-red">📊</div>
+        <code>visits.html</code> — the counter page
+      </div>
+      <p>
+        When Flask receives a request on <code>/count</code>, it calls
+        <code>r.incr('visits')</code> — this tells Redis to increment the
+        <code>visits</code> key by 1 and return the new value. Flask then passes
+        that number to the template:
+      </p>
+      <pre>return render_template('visits.html', count=visits)</pre>
+      
+    </div>
+
+    <hr />
+
+    <!-- Why two pages -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon icon-green">💡</div>
+        Why two separate pages?
+      </div>
+      <div class="callout">
+        Splitting the welcome page and the counter page keeps responsibilities
+        clean. <code>home.html</code> is static and loads instantly with no
+        Redis dependency. <code>visits.html</code> is dynamic and only hits
+        Redis when actually needed. If Redis is down, only the
+        <code>/count</code> route breaks — the home page still loads fine.
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Request flow -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon icon-blue">🔄</div>
+        The full request flow
+      </div>
+
+      <div class="flow">
+        <div class="flow-step"><div class="flow-dot"></div><span class="flow-text">User clicks the <strong>View visit count</strong> button</span></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-dot"></div><span class="flow-text">Browser sends <code>GET /count</code> to Flask</span></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-dot"></div><span class="flow-text">Flask calls <code>r.incr('visits')</code> → Redis increments the key</span></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-dot"></div><span class="flow-text">Flask renders <code>visits.html</code> with the new count value</span></div>
+        <div class="flow-connector"></div>
+        <div class="flow-step"><div class="flow-dot"></div><span class="flow-text">User sees the updated counter in the browser</span></div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Project structure -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-icon icon-green">📁</div>
+        Project structure
+      </div>
+      <div class="file-tree">
+        <span class="folder">Flask_Redis/</span><br/>
+        &nbsp;&nbsp;<span class="folder">├── templates/</span><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── about.html</span>&nbsp;&nbsp;&nbsp;<span class="note">← static about page</span><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── home.html</span>&nbsp;&nbsp;&nbsp;<span class="note">← static home page</span><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="file">└── visits.html</span>&nbsp;&nbsp;<span class="note">← dynamic counter page</span><br/>
+        &nbsp;&nbsp;<span class="file">├── app.py</span><br/>
+        &nbsp;&nbsp;<span class="file">├── Dockerfile</span><br/>
+        &nbsp;&nbsp;<span class="file">├── docker-compose.yml</span><br/>
+        &nbsp;&nbsp;<span class="file">└── requirements.txt</span>
+      </div>
+      <div class="nav-buttons">
+        <div class="nav-btn primary" onclick="showPage('home')">🏠 <a href="/" class="btn">Back</a></div>
+        
+        
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
