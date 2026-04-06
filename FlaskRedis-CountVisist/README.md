@@ -1,13 +1,16 @@
-# Deploying  a Flask Application + Redis Visit Counter
+# Deploying  a Flask Application + Redis Visit Counter and Scalability with Docker
 
 
 # Requirements:
 - Install Vscode
 - Install Docker Desktop on your machine
-- Creating a Docker file for a Flask app
-- Creating a Docker compose  file for a Flask app
+- Creating a Docker file for a Flask app and Redis
+- Creating a Docker compose  file for a Flask app and Redis
 - Building and running the Docker container
 - Accessing the Flask Application on the browser to display MYSQL version
+
+  <img width="506" height="502" alt="image" src="https://github.com/user-attachments/assets/37396f4e-a092-4d43-b9d3-ad5b3c1cdbef" />
+
 
 # Introduction
 
@@ -53,11 +56,14 @@ flask-app/
 
 # Build our Docker image and run the container
 <b>count.py file:</b>\
+
 <img width="451" height="466" alt="image" src="https://github.com/user-attachments/assets/ce804c9b-f087-4ceb-b779-24dbd8e6a08b" />
 
 
 <b>Docker file :</b>\
-<img width="273" height="156" alt="image" src="https://github.com/user-attachments/assets/c8ebd1bf-9d66-4268-af88-c3ebf71b789e" />
+
+<img width="543" height="331" alt="image" src="https://github.com/user-attachments/assets/776b7005-b353-4708-988a-479b7ee8f030" />
+
 
 
 
@@ -67,6 +73,7 @@ flask-app/
 
 # Create Docker-compose yaml file
 <b>Docker-compose.yml:</b>\
+
 <img width="618" height="665" alt="image" src="https://github.com/user-attachments/assets/ac6bbf67-24f2-4654-b214-0c17ba486549" />
 
 
@@ -79,17 +86,48 @@ http://localhost:5001
 
 <b>This is the first page the user sees when they visit the app at http://localhost:5001</b>
 
+
 <img width="1201" height="708" alt="image" src="https://github.com/user-attachments/assets/1ff58184-988a-4817-b447-0cc162620906" />
+
 
 <b>This is the about page if user clicks about button</b>
 
 <img width="1200" height="733" alt="image" src="https://github.com/user-attachments/assets/595214e2-796d-4fad-a0e2-e201dab241ca" />
 
+
 <b>This is  count visists page  where user can see the number of times the home page was visisted</b>
 
-<img width="1200" height="722" alt="image" src="https://github.com/user-attachments/assets/9670678a-57e9-4240-bd06-1e086ed1aa1e" />
+<img width="1542" height="777" alt="image" src="https://github.com/user-attachments/assets/808f1478-4a58-4fe9-924b-7a2c1a9ba92a" />
+
+<img width="1651" height="755" alt="image" src="https://github.com/user-attachments/assets/fceb3a73-9b65-4746-ac77-6f38f5784516" />
+
+<img width="1550" height="784" alt="image" src="https://github.com/user-attachments/assets/9fca4de9-4a85-4d6c-8beb-3f4aa58ecb53" />
+
+
+
+
+
+
+<img width="922" height="348" alt="image" src="https://github.com/user-attachments/assets/ddf097c2-ab1b-414c-a032-bd70078fd652" />
+
 
 # Scaling the Flask service
+
+Previously, the Flask web application was configured to run on a single instance. In a production environment, however, it is often necessary to scale services horizontally to handle increased traffic and ensure high availability.
+In this implementation, the application has been scaled to three instances. The port configuration has been updated from a fixed port mapping to expose: 5001, allowing all three instances to communicate internally on port 5001 without conflicts. Since exposed ports are not directly accessible externally, a load balancer is required to sit in front of the instances and distribute incoming traffic evenly across all three Flask replicas.
+
+<b> Web-1 flask instance</b>
+
+<img width="947" height="510" alt="image" src="https://github.com/user-attachments/assets/b5190fa6-a600-4706-a23b-ea5f64763dac" />
+
+<b> Nginx Load Balancer </b>
+
+<img width="577" height="340" alt="image" src="https://github.com/user-attachments/assets/be73251c-96d0-4a3c-ba02-b5f9796d45d3" />
+
+With this command <b> docker-compose up --scale web=3 --build </b> . We can scale up our flask app to 3 instances as shown from the screenshot below.
+
+<img width="950" height="667" alt="image" src="https://github.com/user-attachments/assets/0ce43fd4-9490-4a5f-90a5-1940b3dce6d6" />
+
 
 
 
