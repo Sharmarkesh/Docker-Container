@@ -35,7 +35,7 @@ flask-app/
 │       └── home.html  # Main page template that returns MYSQL version
 │       └── about.html  # Main page template that returns MYSQL version
 │       └── visits.html  # Main page template that returns MYSQL version
-│   ├── app.py          # Flask application
+│   ├── count.py          # Flask application
 │   ├── Dockerfile      # Docker build instructions
 │   ├── Docker-compose.yml      # Docker compose yaml build instructions
 │   ├── requirements.txt # Python dependencies
